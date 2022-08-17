@@ -1,0 +1,45 @@
+# BRMS
+
+In [Probability and Bayesian Modeling](https://bayesball.github.io/BOOK/probability-a-measurement-of-uncertainty.html), wordt de JAGS software gebruikt om te illustreren hoe verschillende Bayesiaanse modellen met Markov Chain Monte Carlo (MCMC) methodes zijn te fitten. JAGS bestaat uit een mix van conjugatieve, Gibbs sampling en Metropolis algoritmes. De laatste jaren is de Hamiltoniaanse sampling methode en de daarmee geassocieerde Stan software populair geworden om Bayesiaanse modellen met MCMC-methodes te draaien.
+
+Het doel van het aanvullend supplement dat Albert heeft gemaakt is om duidelijk te maken hoe deze veel voorkomende Bayesiaanse statistische modellen zijn te fitten met gebruikmaking van het `brms` pakket, een populair interface naar Stan. Dit materiaal moet de gebruiker helpen de basiskenmerken te leren van het aanpassen van Bayesiaanse modellen met Stan, nadat hij vertrouwd is geraakt met de modellen in Waarschijnlijkheid en Bayesiaanse modellering zoals deze in het boek van Albert en Hu zijn beschreven.
+
+## Installing the `brms` package
+
+Basisinformatie over het installeren van `brms`pakket vind je [hier](https://github.com/paul-buerkner/brms).
+
+Omdat het pakket een interface is naar de Stan software, is een C++ compiler vereist.
+
+### Een Bayesiaanse fittingfunctie `brm()`
+
+Een aantrekkelijke eigenschap van het `brms`-pakket is dat één functie `brm()` gebruikt kan worden om alle modellen te fitten die beschreven zijn in *Probability and Bayesian Modeling*.
+
+De basis functie syntaxis van de `brm()` functie is:
+
+    brm(model_description, 
+            data = my_data, 
+            family = the_family,
+            prior = the_prior)
+
+waar
+
+-   `model_description` is de beschrijving van het regressiemodel, inclusief eventuele willekeurige effecten, vergelijkbaar met de notatie die gebruikt wordt in de `glm()` en `glmer` functies;\
+-   `my_data` is het dataframe dat de data bevat;\
+-   `family` is de samplingsfamilie (normaal, binomiaal, Poisson, etc);\
+-   `prior` is de specificatie van de prior op de regressie termen en de error standaarddeviatie.
+
+De output van de `brm()` functie is een object van de brmsfit die de posterior samples bevat en andere informatie over het model.
+
+Hieronder volgen enkele voorbeelden uit Alberts tekst die voor mij duidelijk zijn, waarvan de syntax werkt en de data toegankelijk zijn.
+
+## Laden van pakket
+
+Eerst maar eens de pakketten laden die we bij het draaien van de Bayesiaanse modellen gebruiken.
+
+```{r}
+# Zoals altijd: de pakket moeten wel geïnstalleerd zijn.
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(ProbBayes)
+```

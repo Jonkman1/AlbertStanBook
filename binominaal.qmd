@@ -1,0 +1,119 @@
+# Binominaal modelleren
+
+```{r}
+# Zoals altijd: de pakket moeten wel geïnstalleerd zijn.
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(ProbBayes)
+```
+
+## Voorbeeld
+
+Stel dat een sample van $n=20$ collegestudenten is gevraagd of zij van plan zijn een masker te dragen bij het volgen van een les. Laat $p$ de proportie zijn van alle studenten die van plan zijn maskers te dragen.
+
+### Prior voor proportie
+
+Stel dat je gelooft dat $p=0.40$ is en dat je er 90% zeker van bent dat $p<0.60$.
+
+Gebruik `beta.select()` van het `ProbBayes`-pakket om de parameters vast te stellen die matchen met de beta-curve prior.
+
+```{r}
+beta.select(list(x = 0.4, p = 0.5),
+            list(x = 0.6, p = 0.9))
+```
+
+Een beta-prior van (4.31, 6.30) representeert iemand geloof in de proportie $p$.
+
+### Prior voor de logit parameter
+
+Omdat we het model in termen van een logit functie willen schrijven
+
+$$\theta=log\frac{p}{1-p}$$
+
+willen we een corresponderende normaal prior op $\theta$ vinden.
+
+Dit kan op een eenvoudige manier door een simulatie ...
+
+1.  Simuleer 1000 trekkingen van de beta prior op\
+    $p$.\
+
+-   Computeer $\theta$ op deze gesimuleerde trekkingen van $p$.\
+-   Vind het sample gemiddelde en standaard deviatie van deze trekkingen -- dit zijn schattingen van het gemiddelde en standaard deviatie van de normaal prior op $\theta$.
+
+```{r}
+set.seed(123)
+p_sim <- rbeta(1000, 4.31, 6.30)
+theta_sim <- log(p_sim / (1 - p_sim))
+c(mean(theta_sim), sd(theta_sim))
+```
+
+De prior op de logit parameter $\theta$ wordt verondersteld normaal te zijn met een gemiddelde van **−0.400** en standaard deviatie van **0.654**.
+
+### Fitten van het model
+
+Het model is $y_1,...,y_20$, een random sample van een Bernoulli distributie met waarschijnlijkheid $p$ waarbij $p$ logistische representatie heeft.
+
+$$log(\frac{p}{1-p}=\theta)$$ waar $\theta \tilde N(-0.400,0.654)$
+
+We zetten twintig binaire antwoorden in een dataframe.
+
+```{r}
+bdata <- data.frame(y = c(1, 0, 1, 0, 0, 0, 1, 
+0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0))
+```
+
+We gebruiken de `brm()` functie van het `brms` pakket om het model te fitten.
+
+```{r}
+fit <- brm(data = bdata, 
+            family = bernoulli,
+            y  ~ 0 + Intercept,
+            prior = c(prior(normal(-0.400, 0.654), 
+                           coef = Intercept)),
+            iter = 1000,
+            refresh = 0)
+```
+
+De `plot()` functie laat een densityplot zien en een traceplot van het intercept $\theta$.
+
+```{r}
+plot(fit)
+```
+
+De `summary` functie biedt samenvattende statistieken voor $\theta$.
+
+```{r}
+summary(fit)
+```
+
+De `posterior_samples()` functie biedt ons de gesimuleerde trekkingen van $\theta$.
+
+```{r}
+post <- posterior_samples(fit)
+head(post)
+```
+
+### Inferenties over de proportie
+
+Om een sample trekkingen te krijgen van de posterior distributie van $p$, kan men de inverse logit transformatie gebruiken op de gesimuleerde trekkingen van $\theta$.
+
+$$p=\frac{exp(\theta)}{1+exp(\theta)}$$
+
+```{r}
+post %>% 
+  mutate(p = exp(b_Intercept) / (1 + exp(b_Intercept))) -> post
+```
+
+De posterior dichtheid voor $p$ wordt gevonden door een dichtheidsplot te construeren van de gesimuleerde trekkingen van $p$.
+
+```{r}
+ggplot(post, aes(p)) +
+  geom_density()
+```
+
+Een 90% posterior interval schatting kan gevonden worden door quantielen te definiëren van de gesimuleerde waarden van $p$.
+
+```{r}
+quantile(post$p, c(.05, .95))
+```

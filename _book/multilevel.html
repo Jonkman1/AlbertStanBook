@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.345">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>AlbertStanBook - 8&nbsp; Multilevel</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<link href="./references.html" rel="next">
+<link href="./verhoudingen.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multilevel</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AlbertStanBook</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Voorwoord</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introductie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./brms.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">BRMS</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./binominaal.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Binominale model</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normaal.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normaal modelleren</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poisson.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Poisson modelleren</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proporties.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proporties</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./verhoudingen.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Verhoudingen</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multilevel.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multilevel</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#laden-van-pakket" id="toc-laden-van-pakket" class="nav-link active" data-scroll-target="#laden-van-pakket"> <span class="header-section-number">8.1</span> Laden van pakket</a></li>
+  <li><a href="#multilevel-modeleren-met-proportions" id="toc-multilevel-modeleren-met-proportions" class="nav-link" data-scroll-target="#multilevel-modeleren-met-proportions"> <span class="header-section-number">8.2</span> Multilevel modeleren met proportions</a>
+  <ul class="collapse">
+  <li><a href="#ziekenhuis-study" id="toc-ziekenhuis-study" class="nav-link" data-scroll-target="#ziekenhuis-study"> <span class="header-section-number">8.2.1</span> Ziekenhuis study</a></li>
+  <li><a href="#een-multilevel-model" id="toc-een-multilevel-model" class="nav-link" data-scroll-target="#een-multilevel-model"> <span class="header-section-number">8.2.2</span> Een multilevel model</a></li>
+  <li><a href="#fitten-van-het-bayesiaanse-model" id="toc-fitten-van-het-bayesiaanse-model" class="nav-link" data-scroll-target="#fitten-van-het-bayesiaanse-model"> <span class="header-section-number">8.2.3</span> Fitten van het Bayesiaanse model</a></li>
+  <li><a href="#posterior-samenvattingen-van-beta-en-sigma" id="toc-posterior-samenvattingen-van-beta-en-sigma" class="nav-link" data-scroll-target="#posterior-samenvattingen-van-beta-en-sigma"> <span class="header-section-number">8.2.4</span> Posterior samenvattingen van <span class="math inline">\(\beta\)</span> en <span class="math inline">\(\sigma\)</span></a></li>
+  <li><a href="#posterior-samenvattingen-van-ziekenhuis-effecten" id="toc-posterior-samenvattingen-van-ziekenhuis-effecten" class="nav-link" data-scroll-target="#posterior-samenvattingen-van-ziekenhuis-effecten"> <span class="header-section-number">8.2.5</span> Posterior samenvattingen van ziekenhuis effecten</a></li>
+  </ul></li>
+  <li><a href="#multilevel-modeleren-van-gemiddelden" id="toc-multilevel-modeleren-van-gemiddelden" class="nav-link" data-scroll-target="#multilevel-modeleren-van-gemiddelden"> <span class="header-section-number">8.3</span> Multilevel modeleren van gemiddelden</a>
+  <ul class="collapse">
+  <li><a href="#studie-over-filmbeoordelingen" id="toc-studie-over-filmbeoordelingen" class="nav-link" data-scroll-target="#studie-over-filmbeoordelingen"> <span class="header-section-number">8.3.1</span> Studie over filmbeoordelingen</a></li>
+  <li><a href="#het-multilevel-model" id="toc-het-multilevel-model" class="nav-link" data-scroll-target="#het-multilevel-model"> <span class="header-section-number">8.3.2</span> Het multilevel model</a></li>
+  <li><a href="#bayesiaans-fitten" id="toc-bayesiaans-fitten" class="nav-link" data-scroll-target="#bayesiaans-fitten"> <span class="header-section-number">8.3.3</span> Bayesiaans fitten</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multilevel</span></h1>
+</div>
+
+
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="laden-van-pakket" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="laden-van-pakket"><span class="header-section-number">8.1</span> Laden van pakket</h2>
+<p>Ook hier eerst maar eens de pakketten laden die we bij het draaien van de Bayesiaanse modellen gebruiken.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zoals altijd: de pakket moeten wel geïnstalleerd zijn.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>v ggplot2 3.3.6     v purrr   0.3.4
+v tibble  3.1.7     v dplyr   1.0.9
+v tidyr   1.2.0     v stringr 1.4.0
+v readr   2.1.2     v forcats 0.5.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tibble' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'brms' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Rcpp</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'Rcpp' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading 'brms' package (version 2.17.0). Useful instructions
+can be found by typing help('brms'). A more detailed introduction
+to the package is available through vignette('brms_overview').</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'brms'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    ar</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'bayesplot' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is bayesplot version 1.9.0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>- Online documentation and vignettes at mc-stan.org/bayesplot</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>- bayesplot theme set to bayesplot::theme_default()</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>   * Does _not_ affect other ggplot2 plots</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>   * See ?bayesplot_theme_set for details on theme setting</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ProbBayes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ProbBayes' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: LearnBayes</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'LearnBayes'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:brms':
+
+    rdirichlet</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: gridExtra</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'gridExtra'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    combine</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: shiny</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'shiny' was built under R version 4.1.3</code></pre>
+</div>
+</div>
+</section>
+<section id="multilevel-modeleren-met-proportions" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="multilevel-modeleren-met-proportions"><span class="header-section-number">8.2</span> Multilevel modeleren met proportions</h2>
+<section id="ziekenhuis-study" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="ziekenhuis-study"><span class="header-section-number">8.2.1</span> Ziekenhuis study</h3>
+<p>Tabel 10.2 geeft aantal gevallen en het aantal doden bij een hartaanval voor 13 ziekenhuizen in New York. Deze data zitten in het dataframe <code>DeathHeartAttackManhattan</code> in het <code>ProbBayes</code> pakket.</p>
+</section>
+<section id="een-multilevel-model" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="een-multilevel-model"><span class="header-section-number">8.2.2</span> Een multilevel model</h3>
+<p>We gaan uit van een hierarchisch model zoals beschreven in Sectie 10.3.</p>
+<p><strong>Sampling</strong></p>
+<p>We nemen eerst aan dat <span class="math inline">\(yj\)</span>, het aantal sterfgevallen in het <span class="math inline">\(jde\)</span> ziekenhuis, binomiaal is met steekproefgrootte #<span class="math inline">\(n_j\)</span> en waarschijnlijkheid <span class="math inline">\(p_j\)</span>. Laat <span class="math inline">\(j_theta_j=log(\frac{p_j}{(1-p_j))\)</span> de logit voor het <span class="math inline">\(jde\)</span> ziekenhuis.</p>
+<p>Schrijf <span class="math inline">\(\theta_j=\beta+\gamma_j\)</span>.</p>
+<p><strong>Prior</strong></p>
+<ol type="1">
+<li>We nemen aan dat het intercept <span class="math inline">\(beta\)</span> een student-t distributie heeft met gemiddelde 0, schaalparameter 2,5 en 3 vrijheidsgraden. We nemen aan dat <span class="math inline">\(gamma_i,....,\gamma_N\)</span> normaal verdeeld zijn met gemiddelde 0 en standaardafwijking <span class="math inline">\(\sigma\)</span>.<br>
+</li>
+<li>De standaardafwijking <span class="math inline">\(\sigma\)</span> wordt verondersteld een t-dichtheid te hebben met gemiddelde 0 en standaardafwijking 3.5.</li>
+</ol>
+</section>
+<section id="fitten-van-het-bayesiaanse-model" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="fitten-van-het-bayesiaanse-model"><span class="header-section-number">8.2.3</span> Fitten van het Bayesiaanse model</h3>
+<p>We fitten het multilevelmodel met de <code>brm()</code> functie. Let op het gebruik van het “family = binomial” argument om de steekproefverdeling aan te geven. De component “(1|)” geeft aan dat de <span class="math inline">\(gamma_j\)</span> een willekeurige verdeling heeft.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">data =</span> DeathHeartAttackManhattan, </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> binomial,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>           Deaths <span class="sc">|</span> <span class="fu">trials</span>(Cases) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Hospital),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">refresh =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Compiling Stan program...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Start sampling</code></pre>
+</div>
+</div>
+<p>We hebben geen priors opgegeven, maar er zijn standaard priors achter de schermen. De <code>prior_summary()</code> functie toont de priors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                prior     class      coef    group resp dpar nlpar lb ub
+ student_t(3, 0, 2.5) Intercept                                         
+ student_t(3, 0, 2.5)        sd                                     0   
+ student_t(3, 0, 2.5)        sd           Hospital                  0   
+ student_t(3, 0, 2.5)        sd Intercept Hospital                  0   
+       source
+      default
+      default
+ (vectorized)
+ (vectorized)</code></pre>
+</div>
+</div>
+</section>
+<section id="posterior-samenvattingen-van-beta-en-sigma" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="posterior-samenvattingen-van-beta-en-sigma"><span class="header-section-number">8.2.4</span> Posterior samenvattingen van <span class="math inline">\(\beta\)</span> en <span class="math inline">\(\sigma\)</span></h3>
+<p>De <code>summary()</code> functie toont posterior samenvattingen van <span class="math inline">\(beta\)</span> (het intercept) en de standaardafwijking <span class="math inline">\(\sigma\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: binomial 
+  Links: mu = logit 
+Formula: Deaths | trials(Cases) ~ 1 + (1 | Hospital) 
+   Data: DeathHeartAttackManhattan (Number of observations: 13) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~Hospital (Number of levels: 13) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.19      0.14     0.01     0.52 1.00     1201     1928
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept    -2.60      0.11    -2.81    -2.38 1.00     2820     2247
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+</section>
+<section id="posterior-samenvattingen-van-ziekenhuis-effecten" class="level3" data-number="8.2.5">
+<h3 data-number="8.2.5" class="anchored" data-anchor-id="posterior-samenvattingen-van-ziekenhuis-effecten"><span class="header-section-number">8.2.5</span> Posterior samenvattingen van ziekenhuis effecten</h3>
+<p>De <code>posterior_samples()</code> functie produceert een grote matrix van gesimuleerde trekkingen waarbij de kolom overeenkomt met de parameter en de rij correspondeert met het iteratie nummer.</p>
+<p>Door gebruik te maken van de <code>pivot_longer()</code> functie, formatteer ik de simulatie matrix waarbij er een nieuwe variabele <code>Hospital</code> is die de naam van het ziekenhuis en <code>Effect</code> is de gesimuleerde waarde van <span class="math inline">\(\gamma_y\)</span>. Ook heb ik een nieuwe variabele aan die het nummer van het ziekenhuis is, van 1 tot 13.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_samples</span>(fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"r_Hospital"</span>),</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Hospital"</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Effect"</span>) <span class="ot">-&gt;</span> post</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
+recommended alternatives.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>post<span class="sc">$</span>Hospital_No <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="fu">as.numeric</span>(<span class="fu">factor</span>(post<span class="sc">$</span>Hospital)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Hieronder zie je een grafiek van de posterior verdeling van de parameters voor alle 13 ziekenhuizen.</p>
+<p>Deze zijn gegraveerd op de logit schaal. Door de inverse logit functie te nemen, kan men de posterior verdelingen van de sterftecijfers vinden <span class="math inline">\(p_1,....,p_N\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(post, <span class="fu">aes</span>(Hospital_No, Effect <span class="sc">+</span> b_Intercept)) <span class="sc">+</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multilevel_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="multilevel-modeleren-van-gemiddelden" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="multilevel-modeleren-van-gemiddelden"><span class="header-section-number">8.3</span> Multilevel modeleren van gemiddelden</h2>
+<section id="studie-over-filmbeoordelingen" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="studie-over-filmbeoordelingen"><span class="header-section-number">8.3.1</span> Studie over filmbeoordelingen</h3>
+<p>Tabel 10.1 geeft samenvattingen van de beoordelingen voor acht verschillende animatiefilms. De tabel bevat het aantal beoordelingen, het gemiddelde en de standaardafwijking van de beoordelingen. De gegevens staan in het dataframe <code>animation_rating</code> in het <code>ProbBayes</code> pakket.</p>
+</section>
+<section id="het-multilevel-model" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="het-multilevel-model"><span class="header-section-number">8.3.2</span> Het multilevel model</h3>
+<p><strong>Sampling</strong></p>
+<p>Laat <span class="math inline">\(Y_ij\)</span> de waardering van het <span class="math inline">\(ide\)</span> individu voor de <span class="math inline">\(jde\)</span> film.</p>
+<p>We gaan uit van <span class="math inline">\(y_ij∼N(\mu, \sigma)\)</span>.</p>
+<p><strong>Prior</strong></p>
+<p>De parameters <span class="math inline">\(\mu_1,...,\mu_8\)</span> vertegenwoordigen de gemiddelde ratings voor de acht films. Schrijf</p>
+<p><span class="math display">\[\mu_j=\beta+\gamma_j\]</span></p>
+<ol type="1">
+<li>De intercept-parameter <span class="math inline">\(\beta\)</span> heeft een student t-distributie met gemiddelde 4, schaalparameter 2.5, en 3 vrijheidsgraden.<br>
+</li>
+<li>We nemen aan dat de effectparameters <span class="math inline">\(gamma_1,...,\gamma_8\)</span> een normale verdeling hebben met gemiddelde 0 en standaardafwijking <span class="math inline">\(τ\)</span>.<br>
+</li>
+<li>Er zijn twee standaardafwijkingen, de samplingstandaardafwijking <span class="math inline">\(\sigma\)</span> en de tussen-gemiddelde standaardafwijking <span class="math inline">\(τ\)</span>. Elk van deze standaardafwijkingen krijgen zwak informatieve student t-verdelingen met gemiddelde 0, schaal 2,5 en 3 vrijheidsgraden.</li>
+</ol>
+</section>
+<section id="bayesiaans-fitten" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="bayesiaans-fitten"><span class="header-section-number">8.3.3</span> Bayesiaans fitten</h3>
+<p>Het model wordt gefit door gebruik te maken van de <code>brm()</code> functie. Standaard gaat deze functie standaard uit van een Gaussische (normale) steekproefverdeling. Het argument “(1|movieID)” argument geeft aan dat de `brmu_1,…,_8$ een willekeurige verdeling hebben.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(rating <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span> movieId),</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> animation_ratings,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">refresh =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Compiling Stan program...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Start sampling</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 1 divergent transitions after warmup. See
+https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+to find out why this is a problem and how to eliminate them.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Examine the pairs() plot to diagnose sampling problems</code></pre>
+</div>
+</div>
+<p>Men kan de standaard priors controleren met behulp van de <code>prior_summary()</code> functie.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                prior     class      coef   group resp dpar nlpar lb ub
+ student_t(3, 4, 2.5) Intercept                                        
+ student_t(3, 0, 2.5)        sd                                    0   
+ student_t(3, 0, 2.5)        sd           movieId                  0   
+ student_t(3, 0, 2.5)        sd Intercept movieId                  0   
+ student_t(3, 0, 2.5)     sigma                                    0   
+       source
+      default
+      default
+ (vectorized)
+ (vectorized)
+      default</code></pre>
+</div>
+</div>
+<p>De posterior matrix van gesimuleerde trekkingen is beschikbaar door gebruik te maken van de <code>posterior_samples()</code> functie. Hieronder construeer ik dichtheidsschattingen van de twee standaardafwijkingsparameters $<span class="math inline">\(sigma\)</span> (blauw) en <span class="math inline">\(τ\)</span> (rood).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">posterior_samples</span>(fit),</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(sigma)) <span class="sc">+</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(sd_movieId__Intercept),</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
+recommended alternatives.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="multilevel_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Om de posterior verdelingen van de gemiddelden te tonen, vervorm ik de matrix van gesimuleerde trekkingen door gebruik te maken van de <code>pivot_longer()</code> functie.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_samples</span>(fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="st">'r_movieId[76093,Intercept]'</span><span class="sc">:</span><span class="st">'r_movieId[81847,Intercept]'</span>,</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Movie"</span>,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Effect"</span>) <span class="ot">-&gt;</span> post</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
+recommended alternatives.</code></pre>
+</div>
+</div>
+<p>Onthoud dat we de gemiddelde filmwaardering hebben voorgesteld als <span class="math inline">\(\mu_j=\beta + \gamma_j\)</span>. Hieronder staan parallelle boxplots van de posterior verdelingen van <span class="math inline">\(mu_1,...,\mu_8\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(post, <span class="fu">aes</span>(Movie, Effect <span class="sc">+</span> b_Intercept)) <span class="sc">+</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multilevel_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./verhoudingen.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Verhoudingen</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

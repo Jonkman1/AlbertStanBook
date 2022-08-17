@@ -1,9 +1,4 @@
-# Introduction
+# Introductie
 
-This is a book created from markdown and executable code.
+Hier komt de introductie op het boek @albert2020a en op het artikel @albert2020b
 
-See @knuth84 for additional discussion of literate programming.
-
-```{r}
-1 + 1
-```

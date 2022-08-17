@@ -1,0 +1,68 @@
+# Verhoudingen vergelijken
+
+```{r}
+# Zoals altijd: de pakket moeten wel geïnstalleerd zijn.
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(ProbBayes)
+```
+
+## Verhoudingen vergelijken
+
+### Vergelijken van twee Poisson verhoudingen
+
+Stel we vergelijken twee onafhankelijke samples: $x_1,...,x_m$ is een random sample van een Poisson distributie met gemiddelde $\lambda_x$, en $w_1,...,w_n$ is een random sample van een Poisson distributie met gemiddelde $\lambda_y$. We willen van de ratio van de Poisson gemiddelde $$\theta=\frac{\lambda_x}{\lambda_y}$$ leren
+
+### Schrijf het als een log-lineair model
+
+Stel we verzamelen de observaties
+
+$$y=c(x_1, ...,X_m,W_1...,w_n)$$
+
+en laat `group2`een indicatorvariabele zijn voor de tweede groep.
+
+$$group2=c(0,0,...,0,1,1,...,1)$$
+
+Dan representeren we het model als
+
+$$u_1,...,y_m+n$$
+
+onafhankelijk van de Poisson-distributies met gemiddelden $\lambda_1,..., \lambda_m_n$\$ waarbij de gemiddelden een log-lineair model volgen van
+
+$$log\lambda_j=\beta_0 + \beta_1group2$$
+
+In dit model hebben we $\beta_0=log\lambda_x$, en $\beta_0+\beta_1=log\lambda_y$. Dus $\beta_1=log(\lambda_y)-log(\lambda_x)$ representeert de toename van het gemiddelde op de log schaal.
+
+### De data
+
+We verzamelen aantallen webbezoeken voor een aantal dagen opgeslagen in het dataframe `web_visits` in het `ProbBayes` pakket. De sleutelvariabelen zijn `Day`, de dag van de week, en `Count`, het aantal websitebezoeken. We definiëren een nieuwe variabele `Type` dat is of "weekend" of "dag door de week".
+
+We zijn geïnteresseerd in het vergelijken van gemiddelde bezoeken in het week of op andere anderen in de week.
+
+```{r}
+web_visits %>% 
+  mutate(Type = ifelse(Day %in% 
+      c("Fri", "Sat", "Sun"), "weekend", "weekday")) -> web_visits
+```
+
+### Priors
+
+Hier gaan we uit van zwak informatieve priors op de regressie parameters $\beta_0$ en $\beta_1$.
+
+### Bayesiaans fitten
+
+```{r}
+fit <- brm(Count ~ Type,
+           family = poisson,
+           data = web_visits,
+           refresh = 0)
+```
+
+```{r}
+plot(fit)
+```
+
+```{r}
+summary(fit)
+```

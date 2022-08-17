@@ -1,0 +1,72 @@
+# Poisson modelleren
+
+```{r}
+# Zoals altijd: de pakket moeten wel geïnstalleerd zijn.
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(ProbBayes)
+```
+
+## Poisson Modelleren
+
+Hier observeren we tellingen $y_1,...,y_n$ verdeeld volgens een Poisson distributie met gemiddelde $\lambda$.
+
+Schrijf het model in termen van het logaritme van het gemiddelde:
+
+$$\theta=log\lambda$$ is het model met $N(\mu,\sigma)$ prior op de log gemiddelde parameter $\theta$.
+
+## Leren over website tellingen
+
+In het `ProbBayes` pakket, omvat de variabele `Count` in de dataset `web_visits` tellingen van dagelijkse bezoeken aan een blog_website. We zijn geïnteresseerd in leren van het gemiddelde aantal bezoeken $\lambda$.
+
+We plaatsen een $N(0, 10)$ prior op $\theta=log\lambda$ die de beperkte informatie van de prior over de lokatie van deze parameter uitdrukt.
+
+### Bayesiaans fitten
+
+In deze run van de `brm()` functie gaan we uit van Poisson sampling en een normaal prior met gemiddelde 0 en standaard deviatie 10 geplaatst op het loggemiddelde $\theta=log\lambda$.
+
+```{r}
+fit <- brm(Count ~ 0 + Intercept, 
+            data = web_visits,
+            family = poisson,
+             refresh = 0,
+           prior = prior(normal(0, 10), 
+                         class = b,
+                         coef = "Intercept"))
+```
+
+We bevestigen de prior met de `prior_summary()` functie.
+
+```{r}
+prior_summary(fit)
+```
+
+De `summary()` functie geeft de samenvattingen van de posterior van $\theta$.
+
+```{r}
+summary(fit)
+```
+
+De `posterior_samples()` functie geeft de posterior simulaties van $\theta$.
+
+```{r}
+post <- posterior_samples(fit)
+head(post)
+```
+
+### Posterior predictieve model checks
+
+Feitelijk is dit een slecht model voor deze gegevens. Men kan dat zien door verschillende posterior predictive checks.
+
+De `pp_check()` toont dichtheidsplots van 10 gerepliceerde datasets van de posterior voorspellende verdeling. Merk op dat deze gerepliceerde datasets er anders uitzien (kleinere variatie) dan de geobserveerde data.
+
+```{r}
+pp_check(fit)
+```
+
+De `pp_check()` functie zal een posterior voorspellende controle implementeren met behulp van verschillende controle functies. Hier gebruiken we $(y^_,s)$ als een bivariate controlefunctie. De scatterplot geeft de waarden van $(y^_,s)$ weer. Hieruit blijkt dat de waargenomen gegevens meer variatie vertonen dan het Poisson model voorspelt.
+
+```{r}
+pp_check(fit, type = "stat_2d")
+```

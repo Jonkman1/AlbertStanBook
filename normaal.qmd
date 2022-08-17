@@ -1,0 +1,54 @@
+# Normaal modelleren
+
+```{r}
+# Zoals altijd: de pakket moeten wel geïnstalleerd zijn.
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(ProbBayes)
+```
+
+
+### Normaal samplingsmodel
+
+Stel dat $y_1,...,y_n$ een sample is van een normale distributie met gemiddelde $\mu$ en standaard deviatie $\sigma$.
+
+Voor een prior nemen we aan dat $\mu$ en $\sigma$ onafhankelijk zijn met $\mu$ als een normale prior en $\sigma$ met een uniforme prior op een interval.
+
+### Data en prior
+
+We kijken naar de variable `time` (tijd) van de dataset `federer_time_to_serve` die de tijd tot de service omvat voor 20 serves van Roger Federer.
+
+We plaatsen een zwak informatieve prior op de parameters. We nemen aan datde gemiddelde tijd-tot-service $\mu$ N(15, 5) is en gaan uit van een standard deviatie $\sigma$ die uniform is op het interval (0, 20).
+
+### Bayesiaans fitten
+
+We gebruiken de `brm()` functie met de `family = gaussian` optie. Let op hoe de prior gespecificeerd is door het prior argument.
+
+```{r}
+fit <- brm(data = federer_time_to_serve, 
+            family = gaussian,
+            time ~ 1,
+    prior = c(prior(normal(15, 5), class = Intercept),
+              prior(uniform(0, 20), class = sigma)),
+    iter = 1000, refresh = 0, chains = 4)
+```
+
+Je krijgt densityplots en traceplots voor $\mu$ en $\sigma$ met de `plot()` functie.
+
+```{r}
+plot(fit)
+```
+
+Je krijgt posteriorsamenvattingen voor elke parameter met de `summary()` functie.
+
+```{r}
+summary(fit)
+```
+
+Je kunt een matrix van gesimiuleerde trekkingen krijgen met de `posterior_samples()` functie.
+
+```{r}
+post <- posterior_samples(fit)
+head(post)
+```

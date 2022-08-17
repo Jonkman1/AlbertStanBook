@@ -3,12 +3,18 @@ project:
 
 book:
   title: "AlbertStanBook"
-  author: "Jane Doe"
+  author: "Jim Albert/Harrie Jonkman"
   date: "16-8-2022"
   chapters:
     - index.qmd
     - intro.qmd
-    - summary.qmd
+    - brms.qmd
+    - binominaal.qmd
+    - normaal.qmd
+    - poisson.qmd
+    - proporties.qmd
+    - verhoudingen.qmd
+    - multilevel.qmd
     - references.qmd
 
 bibliography: references.bib

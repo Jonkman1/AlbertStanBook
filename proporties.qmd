@@ -1,0 +1,93 @@
+# Proporties vergelijken
+
+```{r}
+# Zoals altijd: de pakket moeten wel geïnstalleerd zijn.
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(ProbBayes)
+```
+
+## Proporties vergelijken
+
+### Facebook gebruik, voorbeeld
+
+In Hoofdstuk 9 van Alberts en Hu's boek vergelijken ze de volgende proporties. Een sample studenten is gevraagd naar hun geslacht en het gemiddeld aantal keren dat ze op een dag Facebook bezoeken.
+
+Van de $n_M$ mannen in de sample had $y_M$ een hoog aantal Facebook bezoeken en van de $n_F$ vrouwen in de sample had $y_F$ een hoog aantal bezoeken.
+
+Stel dat de data zijn georganiseerd als het volgende dataframe:
+
+\|------ \| ----------- \| ------ \| \| Geslacht\| Sample-omva \| bezoek \| \| mann \| $n_m$ \| \$y_m \| \| vro \| $n_f$ \| $y_f$ \|
+
+### Sampling model
+
+Stel dat we twee onafhankelijke samples hebben waarbij $y_M$ binomial($n_M$ is, $p_M$) en $y_F$ is binomial($n_F$,$p_F$).
+
+Schrijf de proporties met eem logistisch model:
+
+$$log(\frac{p}{1-p})=\beta_o + \beta_1I(Geslacht=Man)$$
+
+Voor vrouwen is de logit van $p_f$ als volgt:
+
+$$log(\frac{p}{1-p})=\beta_0$$
+
+en voor mannen is de logit van $p_m$ als
+
+$$log(\frac{p}{1-p})=\beta_0 +\beta_1$$
+
+### De data
+
+Hier zijn de geobserveerde data:
+
+```{r}
+fb_data <- data.frame(Gender = c("male", "female"),
+                      Sample_Size = c(93, 151),
+                      Visits = c(39, 75))
+```
+
+### Priors
+
+In dit model is $\beta_0$ de logit van het aandeel vrouwen dat veel Facebook gebruikt en $\beta_1$ het verschil in de logits van de proporties voor mannen en vrouwen.
+
+Veronderstel dat je niet veel weet over de locatie van $beta_0$, maar je denkt dat mannen en vrouwen gelijkaardig zijn in hun gebruik van Facebook. Dus je kent u een N(0, 31.6) toe aan $\beta_0$ met een hoge standaardafwijking, wat weinig kennis weergeeft. Om de overtuiging weer te geven dat $\beta_1$ dicht bij 0 ligt, gebruik je een $N(0, 0.71)$ prior.
+
+De `get_prior()` functie geeft een lijst van alle parameters om priors op te definiëren voor dit specifieke model, en kent het resultaat toe aan de prior. Dan worden de twee componenten van de prior toegewezen die de bovenstaande verklaringen weergeven.
+
+```{r}
+(my_prior <- get_prior(family = binomial,
+           Visits | trials(Sample_Size) ~ Gender,
+           data = fb_data))
+```
+
+### Posterior sampling
+
+Hieronder wordt `brm()` gebruikt met de priorspecificatie in `my_prior`.
+
+```{r}
+fit <- brm(family = binomial,
+           Visits | trials(Sample_Size) ~ Gender,
+           data = fb_data,
+           prior = my_prior,
+           iter = 1000,
+           refresh = 0)
+```
+
+Je krijgt dan de matrix van gesimuleerde waarden van de parameters met de `posterior_samples()` functie.
+
+```{r}
+post <- posterior_samples(fit)
+head(post)
+```
+
+De `plot()` functie geeft de traceplots en densityplots van elke parameter.
+
+```{r}
+plot(fit)
+```
+
+Posterior samenvattingen krijg je met de `print()` functie.
+
+```{r}
+print(fit)
+```

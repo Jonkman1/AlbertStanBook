@@ -1,0 +1,150 @@
+# Multilevel modelleren
+
+## Laden van pakket
+
+Ook hier eerst maar eens de pakketten laden die we bij het draaien van de Bayesiaanse modellen gebruiken.
+
+```{r}
+# Zoals altijd: de pakket moeten wel geïnstalleerd zijn.
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(ProbBayes)
+```
+
+## Multilevel modeleren met proportions
+
+### Ziekenhuis study
+
+Tabel 10.2 geeft aantal gevallen en het aantal doden bij een hartaanval voor 13 ziekenhuizen in New York. Deze data zitten in het dataframe `DeathHeartAttackManhattan` in het `ProbBayes` pakket.
+
+### Een multilevel model
+
+We gaan uit van een hierarchisch model zoals beschreven in Sectie 10.3.
+
+**Sampling**
+
+We nemen eerst aan dat $yj$, het aantal sterfgevallen in het $jde$ ziekenhuis, binomiaal is met steekproefgrootte \#$n_j$ en waarschijnlijkheid $p_j$. Laat $j_theta_j=log(\frac{p_j}{(1-p_j))$ de logit voor het $jde$ ziekenhuis.
+
+Schrijf $\theta_j=\beta+\gamma_j$.
+
+**Prior**
+
+1.  We nemen aan dat het intercept $beta$ een student-t distributie heeft met gemiddelde 0, schaalparameter 2,5 en 3 vrijheidsgraden. We nemen aan dat $gamma_i,....,\gamma_N$ normaal verdeeld zijn met gemiddelde 0 en standaardafwijking $\sigma$.\
+2.  De standaardafwijking $\sigma$ wordt verondersteld een t-dichtheid te hebben met gemiddelde 0 en standaardafwijking 3.5.
+
+### Fitten van het Bayesiaanse model
+
+We fitten het multilevelmodel met de `brm()` functie. Let op het gebruik van het "family = binomial" argument om de steekproefverdeling aan te geven. De component "(1\|\Hospital)" geeft aan dat de $gamma_j$ een willekeurige verdeling heeft.
+
+```{r}
+fit <- brm(data = DeathHeartAttackManhattan, 
+           family = binomial,
+           Deaths | trials(Cases) ~ 1 + (1 | Hospital),
+           refresh = 0)
+```
+
+We hebben geen priors opgegeven, maar er zijn standaard priors achter de schermen. De `prior_summary()` functie toont de priors.
+
+```{r}
+prior_summary(fit)
+```
+
+### Posterior samenvattingen van $\beta$ en $\sigma$
+
+De `summary()` functie toont posterior samenvattingen van $beta$ (het intercept) en de standaardafwijking $\sigma$.
+
+```{r}
+summary(fit)
+```
+
+### Posterior samenvattingen van ziekenhuis effecten
+
+De `posterior_samples()` functie produceert een grote matrix van gesimuleerde trekkingen waarbij de kolom overeenkomt met de parameter en de rij correspondeert met het iteratie nummer.
+
+Door gebruik te maken van de `pivot_longer()` functie, formatteer ik de simulatie matrix waarbij er een nieuwe variabele `Hospital` is die de naam van het ziekenhuis en `Effect` is de gesimuleerde waarde van $\gamma_y$. Ook heb ik een nieuwe variabele aan die het nummer van het ziekenhuis is, van 1 tot 13.
+
+```{r}
+posterior_samples(fit) %>% 
+  pivot_longer(starts_with("r_Hospital"),
+               names_to = "Hospital",
+               values_to = "Effect") -> post
+post$Hospital_No <- as.character(as.numeric(factor(post$Hospital)))
+```
+
+Hieronder zie je een grafiek van de posterior verdeling van de parameters voor alle 13 ziekenhuizen.
+
+Deze zijn gegraveerd op de logit schaal. Door de inverse logit functie te nemen, kan men de posterior verdelingen van de sterftecijfers vinden $p_1,....,p_N$.
+
+```{r}
+ggplot(post, aes(Hospital_No, Effect + b_Intercept)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+## Multilevel modeleren van gemiddelden
+
+### Studie over filmbeoordelingen
+
+Tabel 10.1 geeft samenvattingen van de beoordelingen voor acht verschillende animatiefilms. De tabel bevat het aantal beoordelingen, het gemiddelde en de standaardafwijking van de beoordelingen. De gegevens staan in het dataframe `animation_rating` in het `ProbBayes` pakket.
+
+### Het multilevel model
+
+**Sampling**
+
+Laat $Y_ij$ de waardering van het $ide$ individu voor de $jde$ film.
+
+We gaan uit van $y_ij∼N(\mu, \sigma)$.
+
+**Prior**
+
+De parameters $\mu_1,...,\mu_8$ vertegenwoordigen de gemiddelde ratings voor de acht films. Schrijf
+
+$$\mu_j=\beta+\gamma_j$$
+
+1.  De intercept-parameter $\beta$ heeft een student t-distributie met gemiddelde 4, schaalparameter 2.5, en 3 vrijheidsgraden.\
+2.  We nemen aan dat de effectparameters $gamma_1,...,\gamma_8$ een normale verdeling hebben met gemiddelde 0 en standaardafwijking $τ$.\
+3.  Er zijn twee standaardafwijkingen, de samplingstandaardafwijking $\sigma$ en de tussen-gemiddelde standaardafwijking $τ$. Elk van deze standaardafwijkingen krijgen zwak informatieve student t-verdelingen met gemiddelde 0, schaal 2,5 en 3 vrijheidsgraden.
+
+### Bayesiaans fitten
+
+Het model wordt gefit door gebruik te maken van de `brm()` functie. Standaard gaat deze functie standaard uit van een Gaussische (normale) steekproefverdeling. Het argument "(1\|movieID)" argument geeft aan dat de \`brmu_1,...,\mu\_8\$ een willekeurige verdeling hebben.
+
+```{r}
+fit <- brm(rating ~ (1 | movieId),
+           data = animation_ratings,
+           refresh = 0)
+```
+
+Men kan de standaard priors controleren met behulp van de `prior_summary()` functie.
+
+```{r}
+prior_summary(fit)
+```
+
+De posterior matrix van gesimuleerde trekkingen is beschikbaar door gebruik te maken van de `posterior_samples()` functie. Hieronder construeer ik dichtheidsschattingen van de twee standaardafwijkingsparameters \$$sigma$ (blauw) en $τ$ (rood).
+
+```{r}
+ggplot(posterior_samples(fit),
+       aes(sigma)) +
+  geom_density(color = "blue") +
+  geom_density(aes(sd_movieId__Intercept),
+               color = "red")
+```
+
+Om de posterior verdelingen van de gemiddelden te tonen, vervorm ik de matrix van gesimuleerde trekkingen door gebruik te maken van de `pivot_longer()` functie.
+
+```{r}
+posterior_samples(fit) %>% 
+  pivot_longer('r_movieId[76093,Intercept]':'r_movieId[81847,Intercept]',
+               names_to = "Movie",
+               values_to = "Effect") -> post
+```
+
+Onthoud dat we de gemiddelde filmwaardering hebben voorgesteld als $\mu_j=\beta + \gamma_j$. Hieronder staan parallelle boxplots van de posterior verdelingen van $mu_1,...,\mu_8$.
+
+```{r}
+ggplot(post, aes(Movie, Effect + b_Intercept)) +
+  geom_boxplot() +
+  coord_flip()
+```
