@@ -4,7 +4,6 @@ project:
 book:
   title: "AlbertStanBook"
   author: "Jim Albert/Harrie Jonkman"
-  date: "16-8-2022"
   chapters:
     - index.qmd
     - intro.qmd

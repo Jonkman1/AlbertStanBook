@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>AlbertStanBook - 6&nbsp; Proporties</title>
+<title>AlbertStanBook - 6&nbsp; Proporties vergelijken</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,7 +128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proporties</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proporties vergelijken</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -168,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./binominaal.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Binominale model</span></a>
+  <a href="./binominaal.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Binominaal modelleren</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -183,17 +183,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./proporties.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proporties</span></a>
+  <a href="./proporties.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proporties vergelijken</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./verhoudingen.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Verhoudingen</span></a>
+  <a href="./verhoudingen.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Verhoudingen vergelijken</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./multilevel.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multilevel</span></a>
+  <a href="./multilevel.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multilevel modelleren</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -226,7 +226,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proporties</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proporties vergelijken</span></h1>
 </div>
 
 
@@ -431,12 +431,12 @@ recommended alternatives.</code></pre>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  b_Intercept b_Gendermale    lprior      lp__
-1  0.16332013  -0.54593019 -1.918462 -7.761008
-2  0.12150366  -0.66957414 -1.922026 -8.035865
-3 -0.22158118  -0.42867963 -1.937347 -9.141757
-4  0.18369978  -0.28234414 -1.917372 -8.454568
-5 -0.01250256   0.04040585 -1.917186 -8.568260
-6 -0.07541250  -0.14431879 -1.919501 -7.337328</code></pre>
+1  0.13513941   -0.6202579 -1.920443 -7.839533
+2 -0.11196426   -0.1659622 -1.921229 -7.348417
+3 -0.16170932    0.1897022 -1.917656 -8.984950
+4  0.09659172   -0.5877812 -1.921327 -7.674766
+5 -0.14531896    0.2198457 -1.917313 -9.302451
+6  0.16357662   -0.3082601 -1.917189 -8.097521</code></pre>
 </div>
 </div>
 <p>De <code>plot()</code> functie geeft de traceplots en densityplots van elke parameter.</p>
@@ -459,8 +459,8 @@ Formula: Visits | trials(Sample_Size) ~ Gender
 
 Population-Level Effects: 
            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     -0.02      0.17    -0.37     0.30 1.00     1806     1206
-Gendermale    -0.31      0.27    -0.83     0.22 1.00     1566     1442
+Intercept     -0.01      0.17    -0.35     0.35 1.00     2052     1348
+Gendermale    -0.32      0.28    -0.88     0.23 1.00     1049     1154
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -560,7 +560,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./verhoudingen.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Verhoudingen</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Verhoudingen vergelijken</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
